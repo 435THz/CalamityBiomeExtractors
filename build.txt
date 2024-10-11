@@ -1,0 +1,4 @@
+displayName = Calamity Biome Extractors
+author = MistressNebula
+version = 0.1
+modReferences = BiomeExtractorsMod, CalamityMod
