@@ -6,7 +6,8 @@ using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Critters;
 using CalamityMod.Items.Placeables.Ores;
-using CalamityMod.World;
+using CalamityMod.Items.SummonItems;
+using CalamityBiomeExtractors.Content.TileEntities;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -34,14 +35,13 @@ using AstralIceTile = CalamityMod.Tiles.AstralSnow.AstralIce;
 using AstralSandTile = CalamityMod.Tiles.AstralDesert.AstralSand;
 using AstralSandstoneTile = CalamityMod.Tiles.AstralDesert.AstralSandstone;
 using HardenedAstralSandTile = CalamityMod.Tiles.AstralDesert.HardenedAstralSand;
-using CalamityMod.Items.SummonItems;
-using System.Collections.Generic;
 
 namespace CalamityBiomeExtractors.Common
 {
     internal class BiomeDatabase : ModSystem
     {
-        static BiomeExtractionSystem BES => Instance;
+        static BiomeExtractionSystem BES => BiomeExtractionSystem.Instance;
+        public static BiomeDatabase Instance => ModContent.GetInstance<BiomeDatabase>();
 
         #region IDs
         public static readonly string snow_hm = "snow_hm";
@@ -62,6 +62,9 @@ namespace CalamityBiomeExtractors.Common
         public static readonly string hallowed_desert_ml = "hallowed_desert_ml";
         public static readonly string hallowed_snow_ml = "hallowed_snow_ml";
         public static readonly string underworld_ml = "underworld_ml";
+        public static readonly string space_exo = "space_exo";
+        public static readonly string acid_rain = "acid_rain";
+        public static readonly string acid_rain_as = "acid_rain_as";
 
         public static readonly string sunken_sea = "sunken_sea";
         public static readonly string sunken_sea_ds = "sunken_sea_ds";
@@ -98,48 +101,50 @@ namespace CalamityBiomeExtractors.Common
         public static readonly string ug_astral_ore_snow = "ug_astral_ore_snow";
         public static readonly string ug_astral_desert = "ug_astral_desert";
         public static readonly string ug_astral_ore_desert = "ug_astral_ore_desert";
+        public static readonly string graveyard_infernal = "graveyard_infernal";
+        public static readonly string graveyard_dog = "graveyard_dog";
+        public static readonly string graveyard_dog_cold = "graveyard_dog_cold";
+        public static readonly string graveyard_dog_evil = "graveyard_dog_evil";
 
         #endregion
 
         #region Checks
         //BLOCK LISTS
-        static readonly ushort[] sunken_sea_blocks = [(ushort)ModContent.TileType<NavystoneTile>(), (ushort)ModContent.TileType<EutrophicSandTile>(), (ushort)ModContent.TileType<SeaPrismTile>()];
-        static readonly ushort[] sulphur_sea_blocks = [(ushort)ModContent.TileType<SulphurousSandTile>(), (ushort)ModContent.TileType<SulphurousSandstoneTile>(), (ushort)ModContent.TileType<HardenedSulphurousSandstoneTile>()];
-        static readonly ushort[] abyss_gravel = [(ushort)ModContent.TileType<AbyssGravelTile>()];
-        static readonly ushort[] thermal_blocks = [(ushort)ModContent.TileType<PyreMantleTile>(), (ushort)ModContent.TileType<PyreMantleMoltenTile>()];
-        static readonly ushort[] voidstone = [(ushort)ModContent.TileType<VoidstoneTile>()];
-        static readonly ushort[] brimstone_blocks = [(ushort)ModContent.TileType<BrimstoneSlagTile>(), (ushort)ModContent.TileType<InfernalSueviteTile>()];
-        static readonly ushort[] astral_forest_blocks = [(ushort)ModContent.TileType<AstralDirtTile>(), (ushort)ModContent.TileType<AstralStoneTile>(), (ushort)ModContent.TileType<AstralOreTile>(), (ushort)ModContent.TileType<AstralClayTile>(), (ushort)ModContent.TileType<NovaeSlagTile>(), (ushort)ModContent.TileType<AstralGrassTile>()];
-        static readonly ushort[] astral_snow_blocks = [(ushort)ModContent.TileType<AstralIceTile>()];
-        static readonly ushort[] astral_desert_blocks = [(ushort)ModContent.TileType<AstralSandTile>(), (ushort)ModContent.TileType<AstralSandstoneTile>(), (ushort)ModContent.TileType<HardenedAstralSandTile>()];
+        public static readonly ushort[] forestBlocks = [TileID.Grass];
+        public static readonly ushort[] sunken_sea_blocks = [(ushort)ModContent.TileType<NavystoneTile>(), (ushort)ModContent.TileType<EutrophicSandTile>(), (ushort)ModContent.TileType<SeaPrismTile>()];
+        public static readonly ushort[] sulphur_sea_blocks = [(ushort)ModContent.TileType<SulphurousSandTile>(), (ushort)ModContent.TileType<SulphurousSandstoneTile>(), (ushort)ModContent.TileType<HardenedSulphurousSandstoneTile>()];
+        public static readonly ushort[] abyss_gravel = [(ushort)ModContent.TileType<AbyssGravelTile>()];
+        public static readonly ushort[] thermal_blocks = [(ushort)ModContent.TileType<PyreMantleTile>(), (ushort)ModContent.TileType<PyreMantleMoltenTile>()];
+        public static readonly ushort[] voidstone = [(ushort)ModContent.TileType<VoidstoneTile>()];
+        public static readonly ushort[] brimstone_blocks = [(ushort)ModContent.TileType<BrimstoneSlagTile>(), (ushort)ModContent.TileType<InfernalSueviteTile>()];
+        public static readonly ushort[] astral_forest_blocks = [(ushort)ModContent.TileType<AstralDirtTile>(), (ushort)ModContent.TileType<AstralStoneTile>(), (ushort)ModContent.TileType<AstralOreTile>(), (ushort)ModContent.TileType<AstralClayTile>(), (ushort)ModContent.TileType<NovaeSlagTile>(), (ushort)ModContent.TileType<AstralGrassTile>()];
+        public static readonly ushort[] astral_snow_blocks = [(ushort)ModContent.TileType<AstralIceTile>()];
+        public static readonly ushort[] astral_desert_blocks = [(ushort)ModContent.TileType<AstralSandTile>(), (ushort)ModContent.TileType<AstralSandstoneTile>(), (ushort)ModContent.TileType<HardenedAstralSandTile>()];
 
         //COMPLEX
-        static readonly Predicate<ScanData> in_sulphur_sea = scan => abyss_side.Invoke(scan) || sulphur_sea300.Invoke(scan);
+        public static readonly Predicate<ScanData> in_sulphur_sea = scan => abyss_area.Invoke(scan) || sulphur_sea300.Invoke(scan);
 
         //POSITION
-        static readonly Predicate<ScanData> abyss_side = scan =>
-        {
-            if (Abyss.AtLeftSideOfWorld)
-                { if (scan.X < 435) return true; }
-            else
-                { if (scan.X > Main.maxTilesX - 435) return true; }
-            return false;
-        };
+        public static readonly Predicate<ScanData> abyss_area = scan => BiomeChecker.IsInAbyssArea(scan);
 
         //PROGRESSION
-        static readonly Predicate<ScanData> post_scourge = scan => CalamityConditions.DownedDesertScourge.IsMet();
-        static readonly Predicate<ScanData> post_scourge2 = scan => CalamityConditions.DownedAquaticScourge.IsMet();
-        static readonly Predicate<ScanData> post_evil2 = scan => CalamityConditions.DownedHiveMindOrPerforator.IsMet();
-        static readonly Predicate<ScanData> hardmodeOnly = scan => Main.hardMode;
-        static readonly Predicate<ScanData> post_cryogen = scan => CalamityConditions.DownedCryogen.IsMet();
-        static readonly Predicate<ScanData> post_plantera= scan => Condition.DownedPlantera.IsMet();
-        static readonly Predicate<ScanData> post_leviathan = scan => CalamityConditions.DownedLeviathan.IsMet();
-        static readonly Predicate<ScanData> post_golem = scan => Condition.DownedGolem.IsMet();
-        static readonly Predicate<ScanData> post_deus = scan => CalamityConditions.DownedAstrumDeus.IsMet();
-        static readonly Predicate<ScanData> post_moon_lord = scan => Condition.DownedMoonLord.IsMet();
-        static readonly Predicate<ScanData> post_providence = scan => CalamityConditions.DownedProvidence.IsMet();
-        static readonly Predicate<ScanData> post_polterghast = scan => CalamityConditions.DownedPolterghast.IsMet();
-        static readonly Predicate<ScanData> post_yharon = scan => CalamityConditions.DownedYharon.IsMet();
+        public static readonly Predicate<ScanData> acid_rain_finished = scan => CalamityConditions.DownedAcidRainT1.IsMet();
+        public static readonly Predicate<ScanData> post_scourge = scan => CalamityConditions.DownedDesertScourge.IsMet();
+        public static readonly Predicate<ScanData> post_evil2 = scan => CalamityConditions.DownedHiveMindOrPerforator.IsMet();
+        public static readonly Predicate<ScanData> hardmodeOnly = scan => Main.hardMode;
+        public static readonly Predicate<ScanData> post_cryogen = scan => CalamityConditions.DownedCryogen.IsMet();
+        public static readonly Predicate<ScanData> post_scourge2 = scan => CalamityConditions.DownedAquaticScourge.IsMet();
+        public static readonly Predicate<ScanData> acid_rain2_finished = scan => CalamityConditions.DownedAcidRainT2.IsMet();
+        public static readonly Predicate<ScanData> post_plantera= scan => Condition.DownedPlantera.IsMet();
+        public static readonly Predicate<ScanData> post_leviathan = scan => CalamityConditions.DownedLeviathan.IsMet();
+        public static readonly Predicate<ScanData> post_golem = scan => Condition.DownedGolem.IsMet();
+        public static readonly Predicate<ScanData> post_deus = scan => CalamityConditions.DownedAstrumDeus.IsMet();
+        public static readonly Predicate<ScanData> post_moon_lord = scan => Condition.DownedMoonLord.IsMet();
+        public static readonly Predicate<ScanData> post_providence = scan => CalamityConditions.DownedProvidence.IsMet();
+        public static readonly Predicate<ScanData> post_polterghast = scan => CalamityConditions.DownedPolterghast.IsMet();
+        public static readonly Predicate<ScanData> post_dog = scan => CalamityConditions.DownedDevourerOfGods.IsMet();
+        public static readonly Predicate<ScanData> post_yharon = scan => CalamityConditions.DownedYharon.IsMet();
+        public static readonly Predicate<ScanData> post_exo_mechs = scan => CalamityConditions.DownedExoMechs.IsMet();
 
         //TIERS
         static readonly Predicate<ScanData> demonic = scan => scan.MinTier((int)BiomeExtractorEnt.EnumTiers.DEMONIC);
@@ -148,11 +153,14 @@ namespace CalamityBiomeExtractors.Common
         static readonly Predicate<ScanData> cyber = scan => scan.MinTier((int)BiomeExtractorEnt.EnumTiers.CYBER);
         static readonly Predicate<ScanData> lunar = scan => scan.MinTier((int)BiomeExtractorEnt.EnumTiers.LUNAR);
         static readonly Predicate<ScanData> ethereal = scan => scan.MinTier((int)BiomeExtractorEnt.EnumTiers.ETHEREAL);
-        static readonly Predicate<ScanData> spectral = scan => scan.MinTier((int)BiomeExtractorEnt.EnumTiers.ETHEREAL); //TODO
-        static readonly Predicate<ScanData> cosmic = scan => scan.MinTier((int)BiomeExtractorEnt.EnumTiers.ETHEREAL); //TODO
-        static readonly Predicate<ScanData> miraculous = scan => scan.MinTier((int)BiomeExtractorEnt.EnumTiers.ETHEREAL); //TODO
+        static readonly Predicate<ScanData> spectral = scan => scan.MinTier(CalamityExtractionTiers.SPECTRAL);
+        static readonly Predicate<ScanData> auric = scan => scan.MinTier(CalamityExtractionTiers.AURIC);
+        static readonly Predicate<ScanData> exo = scan => scan.MinTier(CalamityExtractionTiers.EXO);
 
         //BLOCKS
+        static readonly Predicate<ScanData> grass100 = scan => scan.Tiles(forestBlocks) >= 100;
+        static readonly Predicate<ScanData> anyEvil300 = scan => evil300.Invoke(corruptBlocks).Invoke(scan) || evil300.Invoke(crimsonBlocks).Invoke(scan);
+
         static readonly Predicate<ScanData> sunken_sea150 = scan => scan.Tiles(sunken_sea_blocks) >= 150;
         static readonly Predicate<ScanData> sulphur_sea300 = scan => scan.Tiles(sulphur_sea_blocks) >= 300;
         static readonly Predicate<ScanData> abyss_gravel300 = scan => scan.Tiles(abyss_gravel) >= 300;
@@ -164,10 +172,10 @@ namespace CalamityBiomeExtractors.Common
         static readonly Predicate<ScanData> astral_desert951 = scan => scan.Tiles(astral_desert_blocks) >= 951;
 
         //MACHINE(, TURN BACK NOW)
-        static readonly Predicate<ScanData> sulphuric_extractor = scan => pressurized_extractor.Invoke(scan) || TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out BiomeExtractorEnt _); //TODO BiomeExtractorSulphuric
-        static readonly Predicate<ScanData> pressurized_extractor = scan => thermal_extractor.Invoke(scan) ||TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out BiomeExtractorEnt _); //TODO BiomeExtractorPressurized, requires dungeon materials
-        static readonly Predicate<ScanData> thermal_extractor = scan => abyssal_extractor.Invoke(scan) || TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out BiomeExtractorEnt _); //TODO BiomeExtractorThermoresistant, requires post-golem materials
-        static readonly Predicate<ScanData> abyssal_extractor = scan => TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out BiomeExtractorEnt _) || scan.IsScanner; //TODO BiomeExtractorAbyssal, requires post-polterghast materials
+        static readonly Predicate<ScanData> sulphuric_extractor = scan => pressurized_extractor.Invoke(scan) || TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out SulphuricExtractorEnt _);
+        static readonly Predicate<ScanData> pressurized_extractor = scan => thermal_extractor.Invoke(scan) ||TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out PressurizedExtractorEnt _);
+        static readonly Predicate<ScanData> thermal_extractor = scan => abyssal_extractor.Invoke(scan) || TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out ThermoresistantExtractorEnt _);
+        static readonly Predicate<ScanData> abyssal_extractor = scan => TileUtils.TryGetTileEntityAs((int)scan.X, (int)scan.Y, out AbyssalExtractorEnt _) || scan.IsScanner;
 
         #endregion
 
@@ -186,7 +194,7 @@ namespace CalamityBiomeExtractors.Common
         {
             //create supplementary pools
             BES.AddPool(caverns_pla, 1050, [cyber,  post_plantera]);
-            BES.AddPool(caverns_yhr, 1050, [cosmic, post_yharon]);
+            BES.AddPool(caverns_yhr, 1050, [auric, post_yharon]);
 
             BES.AddPool(snow_hm, 50, [steampunk, hardmodeOnly]);
             BES.AddPool(ug_snow_hm,   1050, [steampunk, hardmodeOnly]);
@@ -200,13 +208,19 @@ namespace CalamityBiomeExtractors.Common
 
             BES.AddPool(hallowed_forest_ml, 100, [ethereal, post_moon_lord]);
             BES.AddPool(hallowed_desert_ml, 100, [ethereal, post_moon_lord]);
-            BES.AddPool(hallowed_snow_ml, 100, [ethereal, post_moon_lord]);
+            BES.AddPool(hallowed_snow_ml,   100, [ethereal, post_moon_lord]);
+
+            BES.AddPool(graveyard_infernal, 500, [demonic], LocalizeAs(graveyard));
+            BES.AddPool(graveyard_dog,      500, [spectral, post_dog]);
+            BES.AddPool(graveyard_dog_cold, 500, [spectral, post_dog]);
+            BES.AddPool(graveyard_dog_evil, 500, [spectral, post_dog]);
 
             BES.AddPool(dungeon_ml, 2000, [ethereal, post_moon_lord]);
 
             BES.AddPool(space_evil2, 4000, [infernal,  post_evil2]);
             BES.AddPool(space_hm,    4000, [steampunk, hardmodeOnly]);
             BES.AddPool(space_ml,    4000, [ethereal,  post_moon_lord]);
+            BES.AddPool(space_exo,   4000, [exo,       post_exo_mechs]);
 
             BES.AddPool(underworld_ml, 4000, [ethereal, post_moon_lord]);
 
@@ -228,11 +242,17 @@ namespace CalamityBiomeExtractors.Common
             BES.AddPoolRequirements(hallowed_forest, hallow125.Invoke(hallowForestBlocks));
             BES.AddPoolRequirements(hallowed_desert, hallow125.Invoke(hallowSandBlocks));
 
+            BES.AddPoolRequirements(graveyard_infernal,               surfaceLayer, tombstone5);
+            BES.AddPoolRequirements(graveyard_dog,      grass100,     surfaceLayer, tombstone5);
+            BES.AddPoolRequirements(graveyard_dog_cold, frost1500,    surfaceLayer, tombstone5);
+            BES.AddPoolRequirements(graveyard_dog_evil, anyEvil300,   surfaceLayer, tombstone5);
+
             BES.AddPoolRequirements(dungeon_ml, dungeon250, belowSurfaceLayer, dungeon_bg);
 
-            BES.AddPoolRequirements(space_evil2, dungeon250, belowSurfaceLayer, dungeon_bg);
-            BES.AddPoolRequirements(space_hm, spaceLayer, dungeon_bg);
-            BES.AddPoolRequirements(space_ml, spaceLayer, dungeon_bg);
+            BES.AddPoolRequirements(space_evil2, spaceLayer);
+            BES.AddPoolRequirements(space_hm,    spaceLayer);
+            BES.AddPoolRequirements(space_ml,    spaceLayer);
+            BES.AddPoolRequirements(space_exo,   spaceLayer);
 
             BES.AddPoolRequirements(underworld_ml, underworldLayer);
 
@@ -264,6 +284,11 @@ namespace CalamityBiomeExtractors.Common
             BES.AddItemInPool(crimson_desert, (short)ModContent.ItemType<BlightedGel>(), 7);
             BES.AddItemInPool(crimson_snow,   (short)ModContent.ItemType<BlightedGel>(), 7);
 
+            BES.AddItemInPool(graveyard_infernal, (short)ModContent.ItemType<BloodOrb>(), 5);
+            BES.AddItemInPool(graveyard_dog,      (short)ModContent.ItemType<DarksunFragment>(), 50);
+            BES.AddItemInPool(graveyard_dog_cold, (short)ModContent.ItemType<EndothermicEnergy>(), 50);
+            BES.AddItemInPool(graveyard_dog_evil, (short)ModContent.ItemType<NightmareFuel>(), 50);
+
             BES.AddItemInPool(ug_desert, (short)ModContent.ItemType<StormlionMandible>(), 5);
 
             BES.AddItemInPool(ug_snow_hm, (short)ModContent.ItemType<EssenceofEleum>(), 1);
@@ -278,11 +303,12 @@ namespace CalamityBiomeExtractors.Common
 
             BES.AddItemInPool(space_evil2, (short)ModContent.ItemType<AerialiteOre>(), 5);
             BES.AddItemInPool(space_hm, (short)ModContent.ItemType<EssenceofSunlight>(), 2);
+            BES.AddItemInPool(pillar, (short)ModContent.ItemType<MeldBlob>(), 8);
             BES.AddItemInPool(space_ml, new ItemEntry((short)ModContent.ItemType<ExodiumCluster>(), 1, 3), 5);
+            BES.AddItemInPool(space_exo, (short)ModContent.ItemType<ExoPrism>(), 1);
 
             BES.AddItemInPool(underworld, (short)ModContent.ItemType<DemonicBoneAsh>(), 5);
             BES.AddItemInPool(underworld_ml, (short)ModContent.ItemType<UnholyEssence>(), 5);
-            //TODO
         }
 
         private static void InitializePools()
@@ -304,9 +330,11 @@ namespace CalamityBiomeExtractors.Common
             BES.AddPool(sunken_sea, 1050, LocalizeAs(sunken_sea));
             BES.AddPool(sunken_sea_ds, 1050, [post_scourge, belowSurfaceLayer]);
 
-            BES.AddPool(sulphur_sea, 2600, (int)BiomeExtractorEnt.EnumTiers.DEMONIC, LocalizeAs(sulphur_sea));
+            BES.AddPool(sulphur_sea, 2600, [demonic], LocalizeAs(sulphur_sea));
+            BES.AddPool(acid_rain  , 2600, [demonic], LocalizeAs(sulphur_sea));
             BES.AddPool(sulphur_sea_hm, 2600, [infernal, hardmodeOnly]);
             BES.AddPool(sulphur_sea_as, 2600, [steampunk, post_scourge2]);
+            BES.AddPool(acid_rain_as,   2600, [steampunk, post_scourge2]);
             BES.AddPool(sulphur_sea_ml, 2600, [ethereal, post_moon_lord]);
 
             BES.AddPool(sulphur_depths,     2601, [sulphuric_extractor], LocalizeAs(sulphur_depths));
@@ -349,23 +377,25 @@ namespace CalamityBiomeExtractors.Common
             BES.AddPoolRequirements(sunken_sea_ds, sunken_sea150);
 
             BES.AddPoolRequirements(sulphur_sea,    in_sulphur_sea);
+            BES.AddPoolRequirements(acid_rain,      in_sulphur_sea);
             BES.AddPoolRequirements(sulphur_sea_hm, in_sulphur_sea);
             BES.AddPoolRequirements(sulphur_sea_as, in_sulphur_sea);
+            BES.AddPoolRequirements(acid_rain_as,   in_sulphur_sea);
             BES.AddPoolRequirements(sulphur_sea_ml, in_sulphur_sea);
 
-            BES.AddPoolRequirements(sulphur_depths,     abyss_side, cavernLayer);
-            BES.AddPoolRequirements(sulphur_depths_lev, abyss_side, cavernLayer);
-            BES.AddPoolRequirements(murky_waters,       abyss_side, cavernLayer, abyss_gravel300);
-            BES.AddPoolRequirements(murky_waters_lev,   abyss_side, cavernLayer, abyss_gravel300);
-            BES.AddPoolRequirements(murky_waters_glm,   abyss_side, cavernLayer, abyss_gravel300);
-            BES.AddPoolRequirements(thermal_vents,      abyss_side, cavernLayer, thermal_blocks300);
-            BES.AddPoolRequirements(thermal_vents_pla,  abyss_side, cavernLayer, thermal_blocks300);
-            BES.AddPoolRequirements(thermal_vents_lev,  abyss_side, cavernLayer, thermal_blocks300);
-            BES.AddPoolRequirements(thermal_vents_glm,  abyss_side, cavernLayer, thermal_blocks300);
-            BES.AddPoolRequirements(the_void,           abyss_side, cavernLayer, voidstone300);
-            BES.AddPoolRequirements(the_void_pla,       abyss_side, cavernLayer, voidstone300);
-            BES.AddPoolRequirements(the_void_lev,       abyss_side, cavernLayer, voidstone300);
-            BES.AddPoolRequirements(the_void_pgh,       abyss_side, cavernLayer, voidstone300);
+            BES.AddPoolRequirements(sulphur_depths,     abyss_area, cavernLayer);
+            BES.AddPoolRequirements(sulphur_depths_lev, abyss_area, cavernLayer);
+            BES.AddPoolRequirements(murky_waters,       abyss_area, cavernLayer, abyss_gravel300);
+            BES.AddPoolRequirements(murky_waters_lev,   abyss_area, cavernLayer, abyss_gravel300);
+            BES.AddPoolRequirements(murky_waters_glm,   abyss_area, cavernLayer, abyss_gravel300);
+            BES.AddPoolRequirements(thermal_vents,      abyss_area, cavernLayer, thermal_blocks300);
+            BES.AddPoolRequirements(thermal_vents_pla,  abyss_area, cavernLayer, thermal_blocks300);
+            BES.AddPoolRequirements(thermal_vents_lev,  abyss_area, cavernLayer, thermal_blocks300);
+            BES.AddPoolRequirements(thermal_vents_glm,  abyss_area, cavernLayer, thermal_blocks300);
+            BES.AddPoolRequirements(the_void,           abyss_area, cavernLayer, voidstone300);
+            BES.AddPoolRequirements(the_void_pla,       abyss_area, cavernLayer, voidstone300);
+            BES.AddPoolRequirements(the_void_lev,       abyss_area, cavernLayer, voidstone300);
+            BES.AddPoolRequirements(the_void_pgh,       abyss_area, cavernLayer, voidstone300);
 
             BES.AddPoolRequirements(brimstone_crag,     underworldLayer, brimstone100);
             BES.AddPoolRequirements(brimstone_crag_hm,  underworldLayer, brimstone100);
@@ -445,8 +475,10 @@ namespace CalamityBiomeExtractors.Common
             BES.AddItemInPool(sulphur_sea, ItemID.Seashell, 4);
             BES.AddItemInPool(sulphur_sea, ItemID.Starfish, 3);
             BES.AddItemInPool(sulphur_sea, ItemID.Cactus, 20);
+            BES.AddItemInPool(acid_rain,   (short)ModContent.ItemType<SulphuricScale>(), 8);
             BES.AddItemInPool(sulphur_sea_hm, ItemID.TurtleShell, 5);
             BES.AddItemInPool(sulphur_sea_as, (short)ModContent.ItemType<BabyFlakCrabItem>(), 6);
+            BES.AddItemInPool(acid_rain_as,   (short)ModContent.ItemType<CorrodedFossil>(), 6);
             BES.AddItemInPool(sulphur_sea_ml, (short)ModContent.ItemType<BloodwormItem>(), 1);
 
             BES.AddItemInPool(sulphur_depths, ItemID.None, 51);
