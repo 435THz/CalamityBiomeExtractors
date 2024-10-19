@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ModLoader;
-using Terraria.Social.WeGame;
 
 namespace CalamityBiomeExtractors
 {
@@ -13,8 +7,14 @@ namespace CalamityBiomeExtractors
     {
         private static readonly object LocBase = "Mods.CalamityBiomeExtractors";
 
+        private static string LocItemsCategory => $"{LocBase}.Items";
+        private static string LocItemsExtractor(string variant) => $"{LocItemsCategory}.{variant}ExtractorItem";
+        public static string LocItemsExtractorName(string variant) => $"{LocItemsExtractor(variant)}.DisplayName";
+        public static string LocItemsExtractorDescr(string variant) => $"{LocItemsExtractor(variant)}.Tooltip";
+
         private static string LocTextCategory => $"{LocBase}.Text";
         public static string LocPoolNames => $"{LocTextCategory}.PoolNames";
+        public static object LocArticles => $"{LocTextCategory}.Articles";
 
     }
 }
