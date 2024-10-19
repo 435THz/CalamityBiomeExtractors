@@ -5,6 +5,23 @@ Items: {
 }
 Text: {
 	PoolNames: {
-
+        sunken_sea : Sunken Sea
+        sulphur_sea : Sulphurous Sea
+        sulphur_depths : Sulphuric Depths
+        murky_waters : Murky Waters
+        thermal_vents : Thermal Vents
+        the_void : The Void
+        brimstone_crag : Brimstone Crag
+        astral_forest : Astral Infection
+        astral_snow : Astral Snow
+        astral_desert : Astral Desert
+        ug_astral_forest : Underground Astral Infection
+        ug_astral_snow : Underground Astral Snow
+        ug_astral_desert : Underground Astral Desert
+	}
+	Articles: {
+		Spectral: "a "
+		Auric: "an "
+		Exo: "{$Auric}"
 	}
 }
