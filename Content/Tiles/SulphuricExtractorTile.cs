@@ -4,6 +4,7 @@ using CalamityBiomeExtractors.Content.Items;
 using CalamityBiomeExtractors.Content.TileEntities;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -11,13 +12,13 @@ namespace CalamityBiomeExtractors.Content.Tiles
 {
     internal class SulphuricExtractorTile : BiomeExtractorTile
     {
-        protected override int FrameCount => throw new NotImplementedException(); //todo
+        protected override int FrameCount => 1; //TODO
 
         protected override BiomeExtractorEnt TileEntity => ModContent.GetInstance<SulphuricExtractorEnt>();
 
         protected override void SetupTileData()
         {
-            //todo dust type
+            DustType = DustID.DemonTorch;
 
             Main.tileObsidianKill[Type] = true;
             TileObjectData.newTile.LavaDeath = true;
@@ -25,7 +26,7 @@ namespace CalamityBiomeExtractors.Content.Tiles
 
         protected override void CreateMapEntries()
         {
-            AddMapEntry(new(0, 0, 0), MapEntryName); //todo choose color
+            AddMapEntry(new(144, 114, 166), MapEntryName);
         }
 
         protected override int ItemType(Tile tile)

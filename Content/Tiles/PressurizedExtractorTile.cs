@@ -2,8 +2,8 @@
 using BiomeExtractorsMod.Content.Tiles;
 using CalamityBiomeExtractors.Content.Items;
 using CalamityBiomeExtractors.Content.TileEntities;
-using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -11,13 +11,13 @@ namespace CalamityBiomeExtractors.Content.Tiles
 {
     internal class PressurizedExtractorTile : BiomeExtractorTile
     {
-        protected override int FrameCount => throw new NotImplementedException(); //todo
+        protected override int FrameCount => 1; //TODO
 
         protected override BiomeExtractorEnt TileEntity => ModContent.GetInstance<PressurizedExtractorEnt>();
 
         protected override void SetupTileData()
         {
-            //todo dust type
+            DustType = DustID.GrassBlades;
 
             Main.tileObsidianKill[Type] = true;
             TileObjectData.newTile.LavaDeath = true;
@@ -25,7 +25,7 @@ namespace CalamityBiomeExtractors.Content.Tiles
 
         protected override void CreateMapEntries()
         {
-            AddMapEntry(new(0, 0, 0), MapEntryName); //todo choose color
+            AddMapEntry(new(43, 68, 17), MapEntryName);
         }
 
         protected override int ItemType(Tile tile)
