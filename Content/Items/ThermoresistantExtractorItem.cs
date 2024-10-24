@@ -13,6 +13,11 @@ namespace CalamityBiomeExtractors.Content.Items
 
         protected override ExtractorUpgradeKit UpgradeItemToCraftThis => throw new NotImplementedException();
 
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 5;
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();

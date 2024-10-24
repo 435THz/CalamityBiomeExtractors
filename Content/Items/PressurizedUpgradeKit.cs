@@ -1,5 +1,6 @@
 ﻿using BiomeExtractorsMod.Content.Items;
 using CalamityBiomeExtractors.Content.Tiles;
+using CalamityMod.Items.Placeables;
 using CalamityMod.Items.Placeables.FurnitureAbyss;
 using Terraria;
 using Terraria.Enums;
@@ -25,6 +26,7 @@ namespace CalamityBiomeExtractors.Content.Items
             CreateRecipe()
                 .AddIngredient(ItemID.HellstoneBar, 5)
                 .AddIngredient(ItemID.GoldenKey, 6)
+                .AddIngredient(ModContent.ItemType<PlantyMush>(), 6)
                 .AddIngredient(ModContent.ItemType<SmoothAbyssGravel>(), 6)
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
