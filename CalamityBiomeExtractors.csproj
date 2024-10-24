@@ -8,11 +8,34 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Content\Items\AbyssalExtractorItem.png" />
+	  <None Remove="Content\Items\AbyssalUpgradeKit.png" />
+	  <None Remove="Content\Items\AuricExtractorItem.png" />
+	  <None Remove="Content\Items\AuricUpgradeKit.png" />
+	  <None Remove="Content\Items\ExoExtractorItem.png" />
+	  <None Remove="Content\Items\ExoUpgradeKit.png" />
+	  <None Remove="Content\Items\PressurizedExtractorItem.png" />
+	  <None Remove="Content\Items\PressurizedUpgradeKit.png" />
+	  <None Remove="Content\Items\SpectralExtractorItem.png" />
+	  <None Remove="Content\Items\SpectralUpgradeKit.png" />
+	  <None Remove="Content\Items\SulphuricExtractorItem.png" />
+	  <None Remove="Content\Items\SulphuricUpgradeKit.png" />
+	  <None Remove="Content\Items\ThermoresistantExtractorItem.png" />
+	  <None Remove="Content\Items\ThermoresistantUpgradeKit.png" />
+	  <None Remove="Content\MapIcons\AbyssalExtractorIcon.png" />
+	  <None Remove="Content\MapIcons\AuricExtractorIcon.png" />
+	  <None Remove="Content\MapIcons\ExoExtractorIcon.png" />
+	  <None Remove="Content\MapIcons\PressurizedExtractorIcon.png" />
+	  <None Remove="Content\MapIcons\SpectralExtractorIcon.png" />
+	  <None Remove="Content\MapIcons\SulphuricExtractorIcon.png" />
+	  <None Remove="Content\MapIcons\ThermoresistantExtractorIcon.png" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Reference Include="BiomeExtractorsMod">
-	    <HintPath>..\ModAssemblies\BiomeExtractorsMod_v1.0.dll</HintPath>
+	    <HintPath>..\ModAssemblies\BiomeExtractorsMod_v1.1.dll</HintPath>
 	  </Reference>
 	  <Reference Include="CalamityMod">
-	    <HintPath>..\ModAssemblies\CalamityMod_v2.0.4.3.dll</HintPath>
+	    <HintPath>..\ModAssemblies\CalamityMod_v2.0.4.4.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 
